@@ -24,7 +24,10 @@ import com.mapbox.mapboxsdk.maps.MapboxMap;
  * used with event listeners to bring up info windows. An {@link InfoWindow} is displayed by default
  * when either a title or snippet is provided.
  * </p>
+ * @deprecated Use a {@link com.mapbox.mapboxsdk.style.layers.SymbolLayer} instead. An example of converting Android
+ * SDK views to be used as a symbol see https://gist.github.com/tobrun/349777a6ef0dfb55245a544344ee197a.
  */
+@Deprecated
 public class MarkerView extends Marker {
 
   private MarkerViewManager markerViewManager;
