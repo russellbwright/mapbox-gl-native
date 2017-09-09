@@ -8,6 +8,8 @@ NS_ASSUME_NONNULL_BEGIN
 @class MGLAttributionInfo;
 @class MGLMapView;
 @class MGLOpenGLStyleLayer;
+@class MGLVectorSource;
+@class MGLVectorStyleLayer;
 
 @interface MGLStyle (Private)
 
@@ -20,6 +22,13 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly, strong) NS_MUTABLE_DICTIONARY_OF(NSString *, MGLOpenGLStyleLayer *) *openGLLayers;
 
 - (void)setStyleClasses:(NS_ARRAY_OF(NSString *) *)appliedClasses transitionDuration:(NSTimeInterval)transitionDuration;
+
+@end
+
+@interface MGLStyle (MGLStreetsAdditions)
+
+@property (nonatomic, readonly, copy) NS_ARRAY_OF(MGLVectorStyleLayer *) *placeStyleLayers;
+@property (nonatomic, readonly, copy) NS_ARRAY_OF(MGLVectorStyleLayer *) *roadStyleLayers;
 
 @end
 
