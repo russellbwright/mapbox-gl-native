@@ -12,7 +12,7 @@ class ExampleCustomLayer {
 public:
     ~ExampleCustomLayer() {
         mbgl::Log::Info(mbgl::Event::General, "~ExampleCustomLayer");
-        if (program) {
+        if (program && !contextLost) {
             glDeleteBuffers(1, &buffer);
             glDetachShader(program, vertexShader);
             glDetachShader(program, fragmentShader);
@@ -65,6 +65,8 @@ public:
     GLuint fill_color = 0;
 
     static GLfloat color[];
+
+    bool contextLost = false;
 };
 
 GLfloat ExampleCustomLayer::color[] = { 0.0f, 1.0f, 0.0f, 1.0f };
@@ -92,9 +94,16 @@ void nativeRender(void *context, const mbgl::style::CustomLayerRenderParameters&
     reinterpret_cast<ExampleCustomLayer*>(context)->render();
 }
 
-void nativeDenitialize(void *context) {
+void nativeDenitialize(void *context, bool contextLost) {
     mbgl::Log::Info(mbgl::Event::General, "nativeDeinitialize");
-    delete reinterpret_cast<ExampleCustomLayer*>(context);
+    ExampleCustomLayer* layer = reinterpret_cast<ExampleCustomLayer*>(context);
+
+    // only delete on clean map shutdown
+    // XXX this is a hack around gl sf re-initialisation
+    //layer->contextLost = contextLost;
+    if (!contextLost) {
+        delete layer;
+    }
 }
 
 extern "C" JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *vm, void *) {
