@@ -44,7 +44,7 @@ using CustomLayerRenderFunction = void (*)(void* context, const CustomLayerRende
  *
  * Note that it may be called even when the InitializeFunction has not been called.
  */
-using CustomLayerDeinitializeFunction = void (*)(void* context);
+using CustomLayerDeinitializeFunction = void (*)(void* context, bool contextLost);
 
 class CustomLayer : public Layer {
 public:
